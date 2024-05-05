@@ -50,7 +50,6 @@ app.*.map.json
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 
-google-services.json
-firebase_options.dart
-GoogleService-Info.plist
-firebase.json
+./google-services.json
+./lib/firebase_options.dart
+./firebase.json
