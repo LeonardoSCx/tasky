@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasky/controllers/auth_controller.dart';
 
 class AppHome extends StatelessWidget {
   const AppHome({super.key});
@@ -8,22 +9,23 @@ class AppHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Tasky",
           style: TextStyle(
             color: Colors.white,
           ),
         ),
         backgroundColor: Colors.blue,
+        actions: [
+          IconButton(
+              onPressed: () => Get.find<AuthController>().signOut(),
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         alignment: Alignment.bottomRight,
         child: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            color: Colors.purple,
-          ),
           onPressed: () {
             Get.toNamed("/login");
           },
@@ -31,6 +33,10 @@ class AppHome extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
           backgroundColor: Colors.blue.shade50,
+          child: const Icon(
+            Icons.add,
+            color: Colors.purple,
+          ),
         ),
       ),
     );
