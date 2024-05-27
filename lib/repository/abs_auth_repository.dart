@@ -1,16 +1,13 @@
-import 'package:equatable/equatable.dart';
 
-class AuthUser extends Equatable{
-
+class AuthUser {
   final String uid;
-  const AuthUser(this.uid);
-
-  @override
-  List<Object?> get props => [uid];
+  final String? email;
+  const AuthUser(this.uid,this.email);
 
 }
 
-abstract class AuthRepository{
+abstract class AuthRepository {
+
   AuthUser? get authUser;
 
   Stream<AuthUser?> get onAuthStateChanged;
@@ -21,7 +18,7 @@ abstract class AuthRepository{
 
   Future<AuthUser?> signInWithGoogle();
 
-  Future<AuthUser?> signInAnonymoysly();
+  Future<AuthUser?> signInAnonymously();
 
   Future<void> signOut();
 }

@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../models/user.dart';
 import 'package:path/path.dart' as path;
+import 'package:tasky/models/user.dart';
+import 'dart:developer';
 
 
 class FirebaseProvider{
@@ -22,16 +22,38 @@ class FirebaseProvider{
 
   // Leemos si el usuario está registrado
   Future<CustomUser?> getMyUser() async{
-    final snapshot = await firestore.doc('user/${currentUser.uid}').get();
-    // '!' -> Indicamos que no va a ser nulo (null safety)
-    if(snapshot.exists) return CustomUser.fromFirebaseMap(snapshot.data()!);
+    try{
+      final snapshot = await firestore.doc('users/${currentUser.uid}').get();
+      // '!' -> Indicamos que no va a ser nulo (null safety)
+      if(snapshot.exists) return CustomUser.fromFirebaseMap(snapshot.data()!);
+      return null;
+    }catch(e){
+      log(e.toString());
+    }
     return null;
+  }
+
+  Future<bool> getUser() async{
+    final docRef = firestore.collection("users").doc(currentUser.uid);
+    bool isRegistered = false;
+
+    try{
+      DocumentSnapshot doc = await docRef.get();
+      if(doc.exists){
+        isRegistered = true;
+      }else{
+        isRegistered = false;
+      }
+    }catch(e){
+      isRegistered = false;
+    }
+    return isRegistered;
   }
 
   // Guardamos usuario
   Future<void> saveUser(CustomUser user, File? image) async{
     // ruta donde guardaremos el usuario
-    final ref = firestore.doc('user/${currentUser.uid}');
+    final ref = firestore.doc('users/${currentUser.uid}');
 
     if(image != null){
       final imagePath = '${currentUser.uid}/profile/${path.basename(image.path)}';

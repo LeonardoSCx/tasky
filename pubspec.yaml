@@ -18,20 +18,29 @@ dependencies:
   firebase_storage: ^11.7.4
   cloud_firestore: ^4.17.2
   google_sign_in: ^6.2.1
-  equatable: ^2.0.5
   page_indicator: ^0.4.1
+  # Pagina deslizante
   flutter_hooks: ^0.20.5
   image_picker: ^1.1.1
   cached_network_image: ^3.3.1
+  intl: ^0.19.0
+
 
   path: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: "^0.13.1"
+flutter_icons:
+  image_path: "assets/icon.png"
+  android: true
 
 flutter:
-
   uses-material-design: true
   assets:
     - assets/
+  fonts:
+    - family: NovaMono
+      fonts:
+        - asset: fonts/NovaMono-Regular.ttf

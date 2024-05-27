@@ -1,6 +1,5 @@
-import 'package:equatable/equatable.dart';
 
-class CustomUser extends Equatable{
+class CustomUser {
   final String id;
   final String name;
   final String lastName;
@@ -9,7 +8,8 @@ class CustomUser extends Equatable{
   // Caracteristicas opcionales
   final String? image;
 
-  const CustomUser(this.id, this.name, this.lastName, this.age, {this.image});
+  CustomUser(this.id, this.name, this.lastName, this.age,
+      {this.image});
 
   Map<String, Object?> toFirebaseMap({String? newImage}) {
     return {
@@ -17,7 +17,6 @@ class CustomUser extends Equatable{
       'name': name,
       'lastName': lastName,
       'age': age,
-      // Si la imagen que me pasa es nula, usa la que tenia por defecto
       'image': newImage ?? image,
     };
   }
@@ -30,10 +29,5 @@ class CustomUser extends Equatable{
         age = data['age'] as int,
         image = data['image'] as String?;
 
-  // Si 2 objetos con el mismo id que no coinciden los mismos parametros
-  // puede ser util para la sincronizacion de datos.
-  // Caso de uso: El usuario hace cambios en local pero no se actualiza en la
-  // bd porque no tiene conexion
-  @override
-  List<Object?> get props => [id,name,lastName,age,image];
+
 }

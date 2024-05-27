@@ -1,16 +1,19 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:tasky/Routes/app_routes.dart';
-import 'package:tasky/repository/auth_repository.dart';
+import 'package:tasky/repository/abs_auth_repository.dart';
+
+import '../providers/firebase_provider.dart';
 
 enum AuthState {
   signedOut,
   signedIn,
 }
+
 // Manejamos los eventos relacionados con el registro / inicio de sesion
 class AuthController extends GetxController {
   final _authRepository = Get.find<AuthRepository>();
+  final provider = FirebaseProvider();
 
   // Registramos el Stream del estado de autenticacacion de la clase abstracta AuthRepository
   late StreamSubscription _authSubscription;
@@ -19,27 +22,32 @@ class AuthController extends GetxController {
   final Rx<AuthState> authState = Rx(AuthState.signedOut);
   final Rx<AuthUser?> authUser = Rx(null);
 
-  void _authStateChanged(AuthUser? user) {
+  /// Si no se ha iniciado sesion en este dispositivo mostrará la pantalla
+  /// de registro y sino la pagina principal.
+  void _authStateChanged(AuthUser? user) async {
     if (user == null) {
       authState.value = AuthState.signedOut;
-      // TODO: Navegar a la pagina registro
       Get.offAllNamed(Routes.intro);
-    }else{
+    } else {
       authState.value = AuthState.signedIn;
-      // TODO: Navegar a la home
-      Get.offAllNamed(Routes.home);
+      if (await provider.getUser()) {
+        Get.offAllNamed(Routes.home);
+      } else {
+        Get.offAllNamed(Routes.profile);
+      }
     }
     authUser.value = user;
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     await Future.delayed(const Duration(seconds: 3));
-    _authSubscription = _authRepository.onAuthStateChanged.listen(_authStateChanged);
+    _authSubscription =
+        _authRepository.onAuthStateChanged.listen(_authStateChanged);
     super.onInit();
   }
 
-  Future<void> signOut() async{
+  Future<void> signOut() async {
     await _authRepository.signOut();
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 import 'package:tasky/Routes/app_routes.dart';
-import 'package:tasky/controllers/home_signing_controller.dart';
+import 'package:tasky/controllers/main_signing_controller.dart';
 import 'package:page_indicator/page_indicator.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -20,18 +20,16 @@ class IntroScreen extends StatelessWidget {
 }
 
 class _IntroPager extends HookWidget {
-  final String sampleText =
-      "¡Bienvenido a nuestra app de tareas diarias! \n Organiza tu día y alcanza tus metas con facilidad. ¡Comienza a planificar ahora mismo!";
+  final String sampleText = "¡Bienvenido a nuestra app de tareas diarias! \n Organiza tu día y alcanza tus metas con facilidad. ¡Comienza a planificar ahora mismo!";
 
   @override
   Widget build(BuildContext context) {
     // Llamamos al controlador
-    final homeSignInController = Get.put(HomeSignInController());
+    final homeSignInController = Get.put(MainSignInController());
 
     return AbsorbPointer(
       // Si el usuario pulsa un boton, los demás eventos se deshabilitarán
       absorbing: homeSignInController.isLoading.value,
-
       child: PageIndicatorContainer(
         align: IndicatorAlign.bottom,
         length: 2,
@@ -89,7 +87,7 @@ class _LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeSignInController = Get.find<HomeSignInController>();
+    final homeSignInController = Get.find<MainSignInController>();
     return Container(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -119,17 +117,17 @@ class _LoginPage extends StatelessWidget {
               ),
             ),
           ),
+          // Widget que muestra el error asociado con el inicio de sesion
           Obx(
             () => Visibility(
               visible: homeSignInController.error.value?.isNotEmpty == true,
-              child: Text(
-                homeSignInController.error.value ?? '',
-                style: const TextStyle(color: Colors.red, fontSize: 24),
+              child: const Text("¡Algo salio mal durante la autenticacion!",
+                style: TextStyle(color: Colors.red, fontSize: 24),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
                 const SizedBox(height: 8),

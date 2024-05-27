@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:tasky/repository/auth_repository.dart';
+import '../abs_auth_repository.dart';
 
 class AuthRepositoryImp extends AuthRepository{
   final _firebaseAuth = FirebaseAuth.instance;
 
-  AuthUser? _userFromFirebase(User? user) => user == null ? null: AuthUser(user.uid);
+  AuthUser? _userFromFirebase(User? user) => user == null ? null: AuthUser(user.uid, user.email);
 
   @override
   // Convierte la clase user de firebase a la nuestra
@@ -41,7 +41,7 @@ class AuthRepositoryImp extends AuthRepository{
   }
 
   @override
-  Future<AuthUser?> signInAnonymoysly() async{
+  Future<AuthUser?> signInAnonymously() async{
     final user = await _firebaseAuth.signInAnonymously();
     return _userFromFirebase(user.user);
   }
