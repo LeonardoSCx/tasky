@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:intl/intl.dart';
+
 import 'package:tasky/Routes/app_routes.dart';
 import 'package:tasky/controllers/TimeController.dart';
 import 'package:tasky/controllers/auth_controller.dart';
@@ -167,15 +166,6 @@ class TodoCard extends StatelessWidget {
                   })
                 ],
               ),
-              // Expanded(
-              //   child: Text(
-              //     todo.titulo,
-              //     style: const TextStyle(
-              //       fontSize: 15,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // ),
               Checkbox(
                 value: todo.completado,
                 onChanged: (newValue) {
