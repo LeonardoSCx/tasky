@@ -16,7 +16,7 @@ migrate_working_dir/
 *.iws
 .idea/
 /.idea
-# The .vscode folder contains launch configuration and tasks you configure in
+# The .vscode folder contains launch configuration and ui you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
@@ -30,6 +30,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.packages
 
 # Symbolication related
 app.*.symbols
@@ -41,3 +42,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+./google-services.json
+./lib/firebase_options.dart
+./firebase.json
