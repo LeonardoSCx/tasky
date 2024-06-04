@@ -17,20 +17,35 @@ class TaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var taskController = Get.put(TaskController());
+    var taskController = Get.find<TaskController>();
     final authController = Get.find<AuthController>();
-    if (tarea != null && edicion) {
-      taskController.titleController.text = tarea!.titulo;
-      taskController.contentController.text = tarea!.contenido;
-      taskController.completado = RxBool(tarea!.completado);
-      taskController.fecha = Rx<DateTime>(tarea!.fechaFin);
-    }
+    // Inidicamos los valores de los controladores al final de la construccion
+    // del Widget para evitar posibles conflictos durante su inicializacion.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (tarea != null && edicion) {
+        taskController.titleController.text = tarea!.titulo;
+        taskController.contentController.text = tarea!.contenido;
+        taskController.completado = RxBool(tarea!.completado);
+        taskController.fecha = Rx<DateTime>(tarea!.fechaFin);
+        taskController.updateSelectedItem(tarea!.prioridad as PriorityTask);
+      } else {
+        taskController.titleController.text = "";
+        taskController.contentController.text = "";
+      }
+    });
     Map<String, dynamic> campos = {
       'Titulo': [taskController.titleController, taskController.emptyValidator],
-      'Detalles': [taskController.contentController, taskController.emptyValidator
+      'Detalles': [
+        taskController.contentController,
+        taskController.emptyValidator
       ],
     };
-    log(tarea.toString());
+    List<PriorityTask> prioridades = [
+      PriorityTask.bajo,
+      PriorityTask.medio,
+      PriorityTask.alto,
+      PriorityTask.critico
+    ];
     return Scaffold(
         appBar: AppBar(
           title: Text(edicion ? "Editar" : "Añade una tarea"),
@@ -66,7 +81,7 @@ class TaskScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                               // onPressed: () => taskController.elegirFecha(),
-                            onPressed: () => taskController.elegirFecha(),
+                              onPressed: () => taskController.elegirFecha(),
                               child: const Icon(Icons.calendar_month))
                         ],
                       ),
@@ -74,7 +89,7 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
                 Obx(
-                      () => Visibility(
+                  () => Visibility(
                     visible: taskController.error.value?.isNotEmpty == true,
                     child: Text(
                       taskController.error.value ?? '',
@@ -82,6 +97,27 @@ class TaskScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  const Text("Nivel de prioridad:"),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Obx(() {
+                    return DropdownButton<PriorityTask>(
+                      value: taskController.prioridadElegida.value,
+                      onChanged: (nuevaPrioridad) {
+                        taskController.updateSelectedItem(nuevaPrioridad!);
+                      },
+                      items: prioridades.map<DropdownMenuItem<PriorityTask>>(
+                          (PriorityTask prioridad) {
+                        return DropdownMenuItem<PriorityTask>(
+                          value: prioridad,
+                          child: Text(prioridad.name),
+                        );
+                      }).toList(),
+                    );
+                  }),
+                ]),
                 Builder(builder: (_) {
                   if (edicion) {
                     return Card(
@@ -106,14 +142,25 @@ class TaskScreen extends StatelessWidget {
                     onPressed: () {
                       log("pulsando boton");
                       log(_formKey.currentState!.validate().toString());
-                      if (_formKey.currentState?.validate() == true && taskController.error.value == null) {
+                      if (_formKey.currentState?.validate() == true &&
+                          taskController.error.value == null) {
                         if (!edicion) {
-                          taskController.addTask(authController.authUser.value!.uid);
-                        }else{
-                          taskController.updateTask(tarea!.uid,authController.authUser.value!.uid,tarea!.fechaCreacion);
+                          taskController
+                              .addTask(authController.authUser.value!.uid);
+                        } else {
+                          taskController.updateTask(
+                            tarea!.uid,
+                            authController.authUser.value!.uid,
+                            tarea!.fechaCreacion,
+                          );
                         }
-                        Get.offAllNamed(Routes.home);
-                      }else{
+                        Get.toNamed(Routes.home);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Tarea añadida correctamente"),
+                          ),
+                        );
+                      } else {
                         log("Algo esta mal");
                       }
                     },

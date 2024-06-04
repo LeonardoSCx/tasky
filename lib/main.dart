@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:tasky/controllers/task_controller.dart';
 import 'package:tasky/repository/abs_crud_repository.dart';
 import 'package:tasky/repository/abs_user_repository.dart';
 import 'package:tasky/repository/implementations/auth_repository.dart';
@@ -22,6 +23,7 @@ void main() async{
   Get.put<AuthRepository>(AuthRepositoryImp());
   Get.put<UserRepository>(UserRepositoryImp());
   Get.put<CrudRepository>(CrudRepositoryImp());
+  Get.put<TaskController>(TaskController());
   runApp(MyApp());
 }
 

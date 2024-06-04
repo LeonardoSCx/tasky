@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         init: authController,
         builder: (_) {
           return GetMaterialApp(
-
+            debugShowCheckedModeBanner: false,
             title: "Tasky_Auth_Flow",
             onGenerateRoute: Routes.routes,
             theme: ThemeUtils.darkTheme(),

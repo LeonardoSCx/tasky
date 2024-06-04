@@ -19,7 +19,6 @@ dependencies:
   cloud_firestore: ^4.17.2
   google_sign_in: ^6.2.1
   page_indicator: ^0.4.1
-  # Pagina deslizante
   flutter_hooks: ^0.20.5
   image_picker: ^1.1.1
   cached_network_image: ^3.3.1
@@ -27,6 +26,7 @@ dependencies:
 
 
   path: any
+  collection: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

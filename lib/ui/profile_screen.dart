@@ -14,6 +14,7 @@ class ProfileScreen extends StatelessWidget {
     final userController = Get.put(UserController());
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Perfil"),
         backgroundColor: const Color(0xFF008f7a),
       ),
       body: Obx(() {
@@ -81,16 +82,6 @@ class _ProfileSection extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            // Obx(() {
-            //   if (Get.find<AuthController>().authState.value ==
-            //       AuthState.signedIn) {
-            //     return Center(
-            //       child: Text(
-            //           "UID: ${Get.find<AuthController>().authUser.value!.uid}"),
-            //     );
-            //   }
-            //   return const SizedBox.shrink();
-            // }),
             Form(
               key: _formKey,
               child: Column(
@@ -124,8 +115,13 @@ class _ProfileSection extends StatelessWidget {
                                   if (_formKey.currentState?.validate() ==
                                       true) {
                                     userController.saveMyUser();
-                                    //TODO: Mostrar una notificacion de que se ha guardado
-                                    Get.offAllNamed(Routes.home);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Perfil actualizado"),
+
+                                      ),
+                                    );
+                                    Get.toNamed(Routes.home);
                                   }
                                 },
                           child: const Text("Guardar"),
