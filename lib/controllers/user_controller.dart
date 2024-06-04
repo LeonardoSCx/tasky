@@ -47,10 +47,11 @@ class UserController extends GetxController{
     final name = nameController.text;
     final lastName = lastNameController.text;
     final age = int.tryParse(ageController.text) ?? 0;
-    final newUser = CustomUser(uid, name, lastName, age);
+    final newUser = CustomUser(uid, name, lastName, age, image: pickedImage.value == null ? user.value?.image : null);
     user.value = newUser;
 
     await _userRepository.saveMyUser(newUser, pickedImage.value);
+    await getMyUser();
     isSaving.value = false;
   }
 

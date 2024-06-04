@@ -25,7 +25,7 @@ class TaskScreen extends StatelessWidget {
       if (tarea != null && edicion) {
         taskController.titleController.text = tarea!.titulo;
         taskController.contentController.text = tarea!.contenido;
-        taskController.completado = RxBool(tarea!.completado);
+        taskController.completado.value = tarea!.completado;
         taskController.fecha = Rx<DateTime>(tarea!.fechaFin);
         taskController.updateSelectedItem(tarea!.prioridad as PriorityTask);
       } else {
@@ -80,7 +80,6 @@ class TaskScreen extends StatelessWidget {
                             ),
                           ),
                           ElevatedButton(
-                              // onPressed: () => taskController.elegirFecha(),
                               onPressed: () => taskController.elegirFecha(),
                               child: const Icon(Icons.calendar_month))
                         ],
@@ -125,9 +124,11 @@ class TaskScreen extends StatelessWidget {
                         () => CheckboxListTile(
                             title: const Text('Completado'),
                             value: taskController.completado.value,
-                            onChanged: (value) {
+                            onChanged: (_) {
+                              log(taskController.completado.value.toString());
                               taskController.completado.value =
                                   !taskController.completado.value;
+
                               tarea!.completado =
                                   taskController.completado.value;
                             }),
