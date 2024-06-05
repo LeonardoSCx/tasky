@@ -7,9 +7,9 @@ import 'package:tasky/ui/home_screen.dart';
 import 'package:tasky/ui/intro_screen.dart';
 import 'package:tasky/ui/register_screen.dart';
 import 'package:tasky/ui/splash_screen.dart';
-
 import '../ui/profile_screen.dart';
 
+/// Clase donde indicamos las diferentes pantallas
 class Routes {
   static const root = '/';
   static const intro = '/intro';

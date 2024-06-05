@@ -12,8 +12,14 @@ class EmailSignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final signinController = Get.put(EmailSignInController());
     Map<String, dynamic> campos = {
-      'Correo': [ signinController.emailController, signinController.emptyValidator,],
-      'Contraseña': [signinController.passwordController,signinController.emptyValidator],
+      'Correo': [
+        signinController.emailController,
+        signinController.emptyValidator,
+      ],
+      'Contraseña': [
+        signinController.passwordController,
+        signinController.emptyValidator
+      ],
     };
     return Scaffold(
         appBar: AppBar(
@@ -45,25 +51,15 @@ class EmailSignInScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 ...campos.entries.map((entry) {
-                  return Widgets.campoFormulario(entry.value[0], entry.value[1], entry.key);
+                  return Widgets.campoFormulario(
+                      entry.value[0], entry.value[1], entry.key);
                 }),
-                // TextFormField(
-                //   controller: signinController.emailController,
-                //   decoration: const InputDecoration(labelText: "Correo"),
-                //   validator: signinController.emailValidator,
-                // ),
-                // const SizedBox(height: 8),
-                // TextFormField(
-                //   controller: signinController.passwordController,
-                //   decoration: const InputDecoration(labelText: "Contraseña"),
-                //   validator: signinController.emptyValidator,
-                // ),
                 const SizedBox(height: 8),
                 Center(
                   child: ElevatedButton(
                     child: const Text('Iniciar Sesion'),
-                    onPressed: (){
-                      if(_formKey.currentState?.validate() == true){
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() == true) {
                         signinController.signinEmailPassword();
                       }
                     },

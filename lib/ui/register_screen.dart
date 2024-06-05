@@ -49,12 +49,14 @@ class EmailRegisterScreen extends StatelessWidget {
                   controller: registerController.passwordController,
                   decoration: const InputDecoration(labelText: "Contraseña"),
                   validator: registerController.passwordValidator,
+                  obscureText: true,
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: registerController.repeatPasswordController,
                   decoration: const InputDecoration(labelText: "Repite Contraseña"),
                   validator: registerController.passwordValidator,
+                  obscureText: true,
                 ),
                 Center(
                   child: ElevatedButton(

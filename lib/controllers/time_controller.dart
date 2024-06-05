@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 
+/// Controlador que actualiza el tiempo restante de una tarea
 class TimeController extends GetxController{
   final DateTime fechaFin;
   Rx<Duration> tiempoRestante = const Duration().obs;
@@ -19,6 +19,8 @@ class TimeController extends GetxController{
     super.onInit();
   }
 
+  /// Metodo que actuliza el valor de las variables definidas anteriores. Si se
+  /// cumple la condicion, dejará de actulizar los valores.
   void _actualizarTiempo(){
 
     Duration diferencia =  fechaFin.difference(DateTime.now());

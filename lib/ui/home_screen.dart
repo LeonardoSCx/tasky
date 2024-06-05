@@ -78,7 +78,9 @@ class HomeScreen extends StatelessWidget {
                             ),
                             onDismissed: (direction) {
                               if (direction == DismissDirection.startToEnd) {
-                                taskController.crudRepository.deleteTask(tareasPorPrioridad[index].uid,authController.authUser.value!.uid );
+                                taskController.crudRepository.deleteTask(
+                                    tareasPorPrioridad[index].uid,
+                                    authController.authUser.value!.uid);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text("Tarea eliminada"),
@@ -123,31 +125,37 @@ class MenuLateral extends StatelessWidget {
   Widget build(BuildContext context) {
     final userController = Get.find<UserController>();
     final authController = Get.find<AuthController>();
-    return Drawer(
-      child: ListView(children: <Widget>[
-        UserAccountsDrawerHeader(
-          accountName: Text(userController.user.value!.name),
-          accountEmail: Text(authController.authUser.value!.email ?? ''),
-          currentAccountPicture: _buildUserImage(),
-          decoration: const BoxDecoration(
-            color: Color(0xFF008f7a),
-          ),
-        ),
-        ListTile(
-            title: const Text("Perfil"),
-            leading: const Icon(Icons.supervised_user_circle),
-            onTap: () => Get.toNamed(Routes.profile)),
-        ListTile(
-          title: const Text("Crear una tarea"),
-          leading: const Icon(Icons.note_add),
-          onTap: () => Get.toNamed(Routes.addTask),
-        ),
-        ListTile(
-          title: const Text("Cerrar sesion"),
-          leading: const Icon(Icons.logout),
-          onTap: () => {Get.find<AuthController>().signOut()},
-        )
-      ]),
+    return Obx(
+      () {
+        final user = userController.user.value;
+        final authUser = authController.authUser.value;
+        return Drawer(
+          child: ListView(children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text(user?.name ?? 'Usuario'),
+              accountEmail: Text(authUser?.email ?? ''),
+              currentAccountPicture: _buildUserImage(),
+              decoration: const BoxDecoration(
+                color: Color(0xFF008f7a),
+              ),
+            ),
+            ListTile(
+                title: const Text("Perfil"),
+                leading: const Icon(Icons.supervised_user_circle),
+                onTap: () => Get.toNamed(Routes.profile)),
+            ListTile(
+              title: const Text("Crear una tarea"),
+              leading: const Icon(Icons.note_add),
+              onTap: () => Get.toNamed(Routes.addTask),
+            ),
+            ListTile(
+              title: const Text("Cerrar sesion"),
+              leading: const Icon(Icons.logout),
+              onTap: () => {Get.find<AuthController>().signOut()},
+            )
+          ]),
+        );
+      },
     );
   }
 }

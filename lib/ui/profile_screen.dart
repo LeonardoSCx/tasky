@@ -45,13 +45,16 @@ class _ProfileSection extends StatelessWidget {
       if (userController.pickedImage.value != null) {
         image = Image.file(userController.pickedImage.value!, fit: BoxFit.fill);
       } else if (userController.user.value?.image?.isNotEmpty == true) {
+
         image = CachedNetworkImage(
           imageUrl: userController.user.value!.image!,
           progressIndicatorBuilder: (_, __, progress) =>
               CircularProgressIndicator(value: progress.progress),
           errorWidget: (_, __, ___) => const Icon(Icons.error),
           fit: BoxFit.fill,
+
         );
+
       }
       return image;
     });

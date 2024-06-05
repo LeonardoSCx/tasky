@@ -1,9 +1,10 @@
-
 import 'package:get/get.dart';
 import 'package:tasky/controllers/auth_controller.dart';
 import 'package:tasky/models/user_task.dart';
 import '../repository/abs_crud_repository.dart';
 
+/// Controlador que escucha los cambios realizados en la coleccion de tareas del
+/// usuario actual.
 class TasksController extends GetxController {
   final crudRepository = Get.find<CrudRepository>();
 

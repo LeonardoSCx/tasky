@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tasky/repository/abs_auth_repository.dart';
 
+/// Controlador que se encarga de recoger los datos del formulario de la pantalla
+/// de registro.
 class RegisterController extends GetxController{
   final _authRepository = Get.find<AuthRepository>();
 
@@ -12,9 +14,13 @@ class RegisterController extends GetxController{
   final error = Rx<String?>(null);
   final isLoading = RxBool(false);
 
+  /// Comprueba que el correo no está vacio o sea nulo
   String? emailValidator(String? value){
     return (value == null || value.isEmpty) ? 'No es un correo valido':null;
   }
+  /// Comprueba que la contraseña no esté vacia o sea nula. Ademas verifica que
+  /// tiene una longitud minima de 6 caracteres. Y comprueba que las contraseñas
+  /// de ambos campos coincidan.
   String? passwordValidator(String? value){
     if (value == null || value.isEmpty) return 'No es una contraseña valida';
     if(value.length < 6) return 'La contraseña debe tener 6 caracteres como minimo';
@@ -24,6 +30,7 @@ class RegisterController extends GetxController{
     return null;
   }
 
+  /// Crea una cuenta con los datos recogidos de la interfaz.
   Future<void> createUserWithEmailPassword() async{
     try{
       isLoading.value = true;

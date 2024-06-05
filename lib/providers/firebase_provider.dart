@@ -8,6 +8,7 @@ import 'dart:developer';
 
 
 class FirebaseProvider{
+
   User get currentUser{
     final user = FirebaseAuth.instance.currentUser;
     if(user == null){
@@ -50,11 +51,10 @@ class FirebaseProvider{
     return isRegistered;
   }
 
-  // Guardamos usuario
+  /// Metodo que nos permite guardar los datos del usuario y la imagen pasada
+  /// tanto en Firestore Databes como en FireStorage
   Future<void> saveUser(CustomUser user, File? image) async{
-    // ruta donde guardaremos el usuario
     final ref = firestore.doc('users/${currentUser.uid}');
-
     if(image != null){
       final imagePath = '${currentUser.uid}/profile/${path.basename(image.path)}';
       final storageRef = storage.ref(imagePath);
