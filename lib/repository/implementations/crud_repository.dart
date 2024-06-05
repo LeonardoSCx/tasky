@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tasky/models/user_task.dart';
 import 'package:tasky/repository/abs_crud_repository.dart';
 
+/// Clase que implementa los metodos de la clase CrudRepository
+/// Permite realizar operaciones CRUD
 class CrudRepositoryImp extends CrudRepository {
 
   @override

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 
+
 enum PriorityTask { bajo, medio, alto, critico }
 
+/// Modelo de las tareas
 class UserTask implements Comparable<UserTask>{
   late String uid;
   late String titulo;
@@ -11,7 +13,8 @@ class UserTask implements Comparable<UserTask>{
   late DateTime fechaFin;
   late bool completado;
   late Enum prioridad;
-  
+
+  /// Constructor principal de la clase
   UserTask({
     required this.uid,
     required this.titulo,
@@ -22,6 +25,8 @@ class UserTask implements Comparable<UserTask>{
     required this.prioridad,
   });
 
+  /// Metodo que transforma los datos de la clase a formato mapa, aceptado por
+  /// Firestore Database
   Map<String, dynamic> toFirestore() {
     return {
       'titulo': titulo,
@@ -33,6 +38,7 @@ class UserTask implements Comparable<UserTask>{
     };
   }
 
+  /// Meotodo que recoge las tareas dado el identificador unico de un usuario
   factory UserTask.fromFirebaseMap(String taskId, Map<String, dynamic> data) {
     return UserTask(
       uid: taskId,
@@ -45,6 +51,7 @@ class UserTask implements Comparable<UserTask>{
     );
   }
 
+  /// Metodo que devuelve un mapa con las tareas agrupadas por el nivel de prioridad
   static Map groupItemsByCategory(List<UserTask> items) {
     return groupBy(items, (item) => item.prioridad.name);
   }

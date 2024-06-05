@@ -10,10 +10,9 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             CircularProgressIndicator(),
             SizedBox(height: 10),
-            Text('Cargando...', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.deepPurpleAccent),)
+            Text('Cargando...', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.teal),)
           ],
         ),
       ),

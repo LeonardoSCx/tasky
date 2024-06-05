@@ -20,6 +20,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Instanciamos los controladores principales al inicio de la aplicacion.
   Get.put<AuthRepository>(AuthRepositoryImp());
   Get.put<UserRepository>(UserRepositoryImp());
   Get.put<CrudRepository>(CrudRepositoryImp());

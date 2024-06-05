@@ -6,6 +6,8 @@ import 'package:tasky/models/user.dart';
 import 'package:tasky/repository/abs_user_repository.dart';
 import 'package:get/get.dart';
 
+/// Controlador que recoge los datos del formulario de la pantalla del perfil del
+/// usuario. Además permite recoger los datos del usuario actual y guardar sus datos.
 class UserController extends GetxController{
   final _userRepository = Get.find<UserRepository>();
   final nameController = TextEditingController();

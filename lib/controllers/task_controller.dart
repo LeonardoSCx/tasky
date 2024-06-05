@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tasky/models/user_task.dart';
 import 'package:tasky/repository/abs_crud_repository.dart';
 
+/// Controlador que permite usar los metodos definidos del CRUD Repository.
 class TaskController extends GetxController {
   final _crudRepository = Get.find<CrudRepository>();
 

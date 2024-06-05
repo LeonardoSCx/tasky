@@ -7,27 +7,29 @@ class AuthRepositoryImp extends AuthRepository{
 
   AuthUser? _userFromFirebase(User? user) => user == null ? null: AuthUser(user.uid, user.email);
 
+  /// Convierte la clase user de firebase a la nuestra (CustomUser)
   @override
-  // Convierte la clase user de firebase a la nuestra
   AuthUser? get authUser => _userFromFirebase(_firebaseAuth.currentUser);
 
+  /// Listener de los cambios de autenticacion.
   @override
   Stream<AuthUser?> get onAuthStateChanged => _firebaseAuth.authStateChanges().asyncMap(_userFromFirebase);
 
-  // Devuelve el usuario creado, sino devolverá null
+  /// Metodo que crea un usuario en Firebase Authentication y devuelve un usuario
   @override
   Future<AuthUser?> createUserWithEmailAndPass(String email, String password) async{
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     return _userFromFirebase(authResult.user);
   }
 
+  /// Metodo para autenticarse con usuario y contraseña. Devuelve un usuario
   @override
   Future<AuthUser?> signInWithEmailAndPass(String email, String password) async{
     final authResult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     return _userFromFirebase(authResult.user);
   }
 
-
+  /// Metodo para iniciar sesion con Google. Devuelve un usuario
   @override
   Future<AuthUser?> signInWithGoogle() async{
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -40,12 +42,14 @@ class AuthRepositoryImp extends AuthRepository{
     return _userFromFirebase(authResult.user);
   }
 
+  /// Metodo para iniciar sesion anonimamente. Devuelve un usuario
   @override
   Future<AuthUser?> signInAnonymously() async{
     final user = await _firebaseAuth.signInAnonymously();
     return _userFromFirebase(user.user);
   }
 
+  /// Metodo para cerrar sesion.
   @override
   Future<void> signOut() async{
     final googleSignIn = GoogleSignIn();

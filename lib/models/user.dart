@@ -1,11 +1,11 @@
-
+/// Modelo del Usuario
 class CustomUser {
   final String id;
   final String name;
   final String lastName;
   final int age;
 
-  // Caracteristicas opcionales
+  /// Propiedades opcionales de la clase que pueden no estar presentes
   final String? image;
 
   CustomUser(this.id, this.name, this.lastName, this.age,
@@ -21,7 +21,8 @@ class CustomUser {
     };
   }
 
-  // Cargar los datos del usuario
+  /// Carga los datos de la coleccion de firebase y lo transforma en un objeto
+  /// de tipo CustomUser.
   CustomUser.fromFirebaseMap(Map<String, dynamic> data)
       : id = data['id'] as String,
         name = data['name'] as String,
