@@ -127,11 +127,13 @@ class MenuLateral extends StatelessWidget {
     final authController = Get.find<AuthController>();
     return Obx(
       () {
+        final user = userController.user.value;
+        final authUser = authController.authUser.value;
         return Drawer(
           child: ListView(children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text(userController.user.value!.name),
-              accountEmail: Text(authController.authUser.value!.email ?? ''),
+              accountName: Text(user?.name ?? 'Usuario'),
+              accountEmail: Text(authUser?.email ?? ''),
               currentAccountPicture: _buildUserImage(),
               decoration: const BoxDecoration(
                 color: Color(0xFF008f7a),
