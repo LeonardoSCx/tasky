@@ -19,6 +19,7 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var taskController = Get.find<TaskController>();
     final authController = Get.find<AuthController>();
+    String mensaje = "";
     // Inidicamos los valores de los controladores al final de la construccion
     // del Widget para evitar posibles conflictos durante su inicializacion.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -65,7 +66,7 @@ class TaskScreen extends StatelessWidget {
                 Obx(
                   () => Card(
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
+                        horizontal: 8, vertical: 8),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -96,7 +97,9 @@ class TaskScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Row
+                  (
+                    mainAxisAlignment: MainAxisAlignment.center, children: [
                   const Text("Nivel de prioridad:"),
                   const SizedBox(
                     width: 10,
@@ -116,7 +119,8 @@ class TaskScreen extends StatelessWidget {
                       }).toList(),
                     );
                   }),
-                ]),
+                ],
+                ),
                 Builder(builder: (_) {
                   if (edicion) {
                     return Card(
@@ -146,9 +150,11 @@ class TaskScreen extends StatelessWidget {
                       if (_formKey.currentState?.validate() == true &&
                           taskController.error.value == null) {
                         if (!edicion) {
+                          mensaje = "Tarea añadida correctamente";
                           taskController
                               .addTask(authController.authUser.value!.uid);
                         } else {
+                          mensaje = "Tarea modificada correctamente";
                           taskController.updateTask(
                             tarea!.uid,
                             authController.authUser.value!.uid,
@@ -157,8 +163,8 @@ class TaskScreen extends StatelessWidget {
                         }
                         Get.toNamed(Routes.home);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Tarea añadida correctamente"),
+                          SnackBar(
+                            content: Text(mensaje),
                           ),
                         );
                       } else {
