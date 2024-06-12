@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                                 taskController.crudRepository.deleteTask(
                                     tareasPorPrioridad[index].uid,
                                     authController.authUser.value!.uid);
-                                await Future.delayed(const Duration(seconds: 3));
+                                await Future.delayed(const Duration(seconds: 1));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text("Tarea eliminada"),
