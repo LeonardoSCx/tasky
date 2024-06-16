@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tasky/repository/abs_auth_repository.dart';
@@ -37,7 +39,10 @@ class RegisterController extends GetxController{
       error.value = null;
       await _authRepository.createUserWithEmailAndPass(emailController.text, passwordController.text);
     }catch(e){
-      error.value = e.toString();
+      log(e.toString());
+      error.value = "Algo salio mal";
+      if(e.toString().contains("invalid-credential")) error.value = "Las credenciales no son correctas";
+      if(e.toString().contains("invalid-email")) error.value = "El email no es válido";
     }
     isLoading.value = false;
   }

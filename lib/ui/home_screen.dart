@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return Dismissible(
                             direction: DismissDirection.startToEnd,
-                            key: Key(index.toString()),
+                            key: Key(tareasPorPrioridad[index].uid),
                             secondaryBackground: Container(
                               color: Colors.green,
                             ),
@@ -76,17 +76,19 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onDismissed: (direction) {
+                            onDismissed: (direction) async {
                               if (direction == DismissDirection.startToEnd) {
                                 taskController.crudRepository.deleteTask(
                                     tareasPorPrioridad[index].uid,
                                     authController.authUser.value!.uid);
+                                await Future.delayed(const Duration(seconds: 1));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text("Tarea eliminada"),
                                   ),
                                 );
                               }
+
                             },
                             child: TodoCard(
                               uid: authController.authUser.value!.uid,
@@ -200,6 +202,11 @@ class TodoCard extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     taskController.crudRepository.deleteTask(todo.uid, uid);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Tarea eliminada correctamente"),
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.delete)),
               Column(

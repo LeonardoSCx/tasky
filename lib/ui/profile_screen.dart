@@ -97,7 +97,7 @@ class _ProfileSection extends StatelessWidget {
                   TextFormField(
                     controller: userController.lastNameController,
                     decoration: const InputDecoration(labelText: "Apellido"),
-                    validator: userController.emailValidator,
+
                   ),
                   TextFormField(
                     controller: userController.ageController,
